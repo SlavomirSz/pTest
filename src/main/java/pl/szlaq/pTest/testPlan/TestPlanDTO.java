@@ -1,11 +1,9 @@
 package pl.szlaq.pTest.testPlan;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import pl.szlaq.pTest.project.ProjectDTO;
 
 import javax.persistence.*;
 

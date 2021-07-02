@@ -3,10 +3,11 @@ package pl.szlaq.pTest.project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.szlaq.pTest.testPlan.TestPlan;
-import pl.szlaq.pTest.testPlan.TestPlanRepository;
 import pl.szlaq.pTest.testPlan.TestPlanService;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,18 +31,29 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project getProject(long id) {
-        Project project = new Project(projectRepository.findById(id).get());
-        project.setTestPlanList(testPlanService.getTestPlansInProject(id));
-        return project;
+        Optional<ProjectDTO> optionalProject = projectRepository.findById(id);
+        if (optionalProject.isPresent()) {
+            Project project = new Project(optionalProject.get());
+            project.setTestPlanList(testPlanService.getTestPlansInProject(id));
+            return project;
+        } else {
+            throw new NoSuchElementException("There is no project with id = " + id);
+        }
+
     }
 
     @Override
     public Project editProject(Project project) {
-        ProjectDTO proj = projectRepository.findById(project.getId()).get();
-        proj.setName(project.getName());
-        proj.setDescription(project.getDescription());
-        projectRepository.save(proj);
-        return new Project(proj);
+        Optional<ProjectDTO> optionalProject = projectRepository.findById(project.getId());
+        if (optionalProject.isPresent()) {
+            ProjectDTO projectToEdit = optionalProject.get();
+            projectToEdit.setName(project.getName());
+            projectToEdit.setDescription(project.getDescription());
+            projectRepository.save(projectToEdit);
+            return new Project(projectToEdit);
+        } else {
+            throw new NoSuchElementException("There is no project with id = " + project.getId());
+        }
     }
 
     @Override

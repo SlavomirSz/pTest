@@ -1,6 +1,5 @@
 package pl.szlaq.pTest.project;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;

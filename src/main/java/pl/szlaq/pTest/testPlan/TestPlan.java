@@ -7,7 +7,6 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import pl.szlaq.pTest.domain.TestCase;
 
-import javax.persistence.ManyToOne;
 import java.util.List;
 
 @Data
